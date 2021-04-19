@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <set>
-#include <chrono>
 
 using std::set;
 using std::vector;
@@ -9,69 +8,13 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-// using std::chrono::high_resolution_clock;
-
 #include "../include/edge.hpp"
 #include "../include/graph.hpp"
 
 int main()
 {
-
-    //// Benchmark graph implementaions
-    // vector<double> times;
-
-    // for (int i = 0; i < 10000; i++)
-    // {
-    //     vector<Edge> edge_list;
-    //     set<int> nodes;
-
-    //     edge_list.push_back(Edge(0, 1, 4));
-    //     edge_list.push_back(Edge(0, 2, 1));
-    //     edge_list.push_back(Edge(0, 3, 5));
-    //     edge_list.push_back(Edge(1, 3, 2));
-    //     edge_list.push_back(Edge(1, 4, 3));
-    //     edge_list.push_back(Edge(1, 5, 3));
-    //     edge_list.push_back(Edge(2, 3, 2));
-    //     edge_list.push_back(Edge(2, 4, 8));
-    //     edge_list.push_back(Edge(3, 4, 1));
-    //     edge_list.push_back(Edge(4, 5, 3));
-
-    //     for (auto edge : edge_list)
-    //     {
-    //         nodes.insert(edge.first_node());
-    //         nodes.insert(edge.second_node());
-    //     }
-
-    //     // std::cout << std::endl;
-
-    //     auto start_time = high_resolution_clock::now();
-    //     AdjacencyList list(nodes.size());
-
-    //     for (auto edge : edge_list)
-    //     {
-    //         list.add_edge(edge);
-    //     }
-
-    //     list.prims();
-
-    //     auto end_time = high_resolution_clock::now();
-    //     std::chrono::duration<double, std::nano> sort_duration = end_time - start_time;
-
-    //     // std::cout << "Took " << sort_duration.count() << " ns" << std::endl;
-    //     times.push_back(sort_duration.count());
-    // }
-
-    // double total = 0;
-    // for (auto time : times)
-    // {
-    //     total += time;
-    // }
-
-    // auto average = total / times.size();
-
-    // std::cout << "Average Time: " << average << " ns" << std::endl;
-
-    Graph list(7);
+    /// First Test Case
+    Graph graph(7);
     vector<Edge> edge_list;
 
     edge_list.push_back(Edge(0, 1, 1));
@@ -106,11 +49,29 @@ int main()
     edge_list.push_back(Edge(6, 5, 1));
 
     for (auto edge : edge_list)
-    {
-        list.add_edge(edge);
-    }
+        graph.add_edge(edge);
 
-    list.print();
+    graph.print();
+    cout << graph.prims() << endl;
 
-    cout << list.prims() << endl;
+    /// Second Test Case
+    Graph graph2(6);
+    vector<Edge> edge_list2;
+
+    edge_list2.push_back(Edge(0, 1, 4));
+    edge_list2.push_back(Edge(0, 2, 1));
+    edge_list2.push_back(Edge(0, 3, 5));
+    edge_list2.push_back(Edge(1, 3, 2));
+    edge_list2.push_back(Edge(1, 4, 3));
+    edge_list2.push_back(Edge(1, 5, 3));
+    edge_list2.push_back(Edge(2, 3, 2));
+    edge_list2.push_back(Edge(2, 4, 8));
+    edge_list2.push_back(Edge(3, 4, 1));
+    edge_list2.push_back(Edge(4, 5, 3));
+
+    for (auto edge : edge_list2)
+        graph2.add_edge(edge);
+
+    graph2.print();
+    cout << graph2.prims() << endl;
 }
