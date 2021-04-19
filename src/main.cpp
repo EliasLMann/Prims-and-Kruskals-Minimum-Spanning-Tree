@@ -6,10 +6,13 @@
 using std::set;
 using std::vector;
 
-using std::chrono::high_resolution_clock;
+using std::cout;
+using std::endl;
+
+// using std::chrono::high_resolution_clock;
 
 #include "../include/edge.hpp"
-#include "../include/adjacency_list.hpp"
+#include "../include/graph.hpp"
 
 int main()
 {
@@ -68,7 +71,7 @@ int main()
 
     // std::cout << "Average Time: " << average << " ns" << std::endl;
 
-    AdjacencyList list(7);
+    Graph list(7);
     vector<Edge> edge_list;
 
     edge_list.push_back(Edge(0, 1, 1));
@@ -109,5 +112,5 @@ int main()
 
     list.print();
 
-    std::cout << list.prims() << std::endl;
+    cout << list.prims() << endl;
 }

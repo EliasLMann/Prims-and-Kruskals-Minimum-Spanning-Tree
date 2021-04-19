@@ -18,7 +18,7 @@ using std::vector;
 // Local Dependencies
 #include "edge.hpp"
 
-class AdjacencyList
+class Graph
 {
 private:
     /**
@@ -33,25 +33,25 @@ public:
      * An undirected weighted graph implemented on-top of an adjacency list.
      * @constructor
      **/
-    AdjacencyList(int num_nodes) { adj.resize(num_nodes); };
+    Graph(int num_nodes) { adj.resize(num_nodes); };
 
     /**
      * An undirected weighted graph implemented on-top of an adjacency list.
      * @constructor
      **/
-    AdjacencyList(const AdjacencyList &src) { adj = src.adj; };
+    Graph(const Graph &src) { adj = src.adj; };
 
     /**
      * An undirected weighted graph implemented on-top of an adjacency list.
      * @constructor
      **/
-    ~AdjacencyList(){};
+    ~Graph(){};
 
     /**
      * An undirected weighted graph implemented on-top of an adjacency list.
-     * @param {const AdjacencyList &} src - The object to copy
+     * @param {const Graph &} src - The object to copy
      **/
-    void operator=(const AdjacencyList &src) { adj = src.adj; };
+    void operator=(const Graph &src) { adj = src.adj; };
 
     /**
      * Add an pair of nodes and the wieght that constitutes their edge to the graph
