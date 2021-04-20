@@ -17,6 +17,9 @@ using std::vector;
 
 // Local Dependencies
 #include "edge.hpp"
+#include "disjointSet.hpp"
+
+typedef priority_queue<NodeDistance, vector<NodeDistance>, greater<NodeDistance>> minHeap;
 
 class Graph
 {
@@ -27,7 +30,7 @@ private:
      * describe how far adjacent nodes are from the origin node.
      **/
     vector<vector<NodeDistance>> adj;
-    
+
 
 public:
     /**
@@ -93,7 +96,7 @@ public:
     {
         // Store the distances of nodes and the destination in a priority queue for more performant traversal
         // the values are sorted by the first value in the NodeDistance, which is the weight
-        priority_queue<NodeDistance, vector<NodeDistance>, greater<NodeDistance>> heap;
+        minHeap heap;
 
         // The original node (0) has no distance from itself
         heap.push(make_pair(0, 0));
@@ -130,5 +133,11 @@ public:
             }
         }
         return cost;
+    }
+
+    int kruskals(){
+        minHeap edges;
+        
+
     }
 };

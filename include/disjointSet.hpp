@@ -1,19 +1,20 @@
 /* Elias Mann - SMU CS 3353 2021 Spring PA04
  * 
- * A disjoint set data structure used to implement a union-find algorithm. 
- * Used in kruskal's algorithm implementation*/
+ * A disjoint set data structure used to implement kruskal's algorithm*/
+
+//lesson on Disjoint sets from: https://www.youtube.com/watch?v=wU6udHRIkcc
 
 #pragma once
 
-// C++ implementation of disjoint set from https://www.geeksforgeeks.org/disjoint-set-data-structures/
 #include <iostream>
 using namespace std;
+
 class DisjointSet {
 private:
     //array of parents, declared in heap. If mParent is negative, it represents the wight of the set
     //the greater the absolute value of the weight, the more weight the given set has.
     int* mParent;
-  
+
 public:
     //Constructor passing in number of vertices
     DisjointSet(int numV){
@@ -23,6 +24,9 @@ public:
             mParent[i] = -1;
         }
     }
+
+    //destructor
+    ~DisjointSet(){ delete [] mParent;}
   
     //collapsing find method:
     //when the root of a given subset containing the vertex is found, 
