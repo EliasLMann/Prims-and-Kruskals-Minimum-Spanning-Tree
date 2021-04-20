@@ -19,8 +19,6 @@ using std::vector;
 #include "edge.hpp"
 #include "disjointSet.hpp"
 
-typedef priority_queue<NodeDistance, vector<NodeDistance>, greater<NodeDistance>> minHeap;
-
 class Graph
 {
 private:
@@ -30,6 +28,7 @@ private:
      * describe how far adjacent nodes are from the origin node.
      **/
     vector<vector<NodeDistance>> adj;
+    priority_queue<Edge, vector<Edge>, greater<Edge>> edgeMinHeap;;
 
 
 public:
@@ -43,11 +42,11 @@ public:
      * An undirected weighted graph implemented on-top of an adjacency list.
      * @constructor
      **/
-    Graph(const Graph &src) { adj = src.adj; };
+    Graph(const Graph &src) { adj = src.adj; edgeMinHeap = src.edgeMinHeap; };
 
     /**
      * An undirected weighted graph implemented on-top of an adjacency list.
-     * @constructor
+     * @destructor
      **/
     ~Graph(){};
 
@@ -61,7 +60,19 @@ public:
      * Add an pair of nodes and the wieght that constitutes their edge to the graph
      * @param {Edge &} edge - the edge to add to the graph
      **/
-    void add_edge(Edge &edge) { adj[edge.first_node()].push_back(edge.distance()); }
+    void add_edge(Edge &edge) {
+         adj[edge.first_node()].push_back(edge.distance());
+         //adds edge to min heap
+         edgeMinHeap.push(edge);
+         }
+
+    void testQueue(){
+        while(!edgeMinHeap.empty()){
+            Edge currEdge = edgeMinHeap.top();
+            edgeMinHeap.pop();
+            std:: cout <<  currEdge.weight() << std::endl;
+        }
+    }
 
     /**
      * Display the graph by displaying all origin nodes and their adjacent nodes with
@@ -96,7 +107,7 @@ public:
     {
         // Store the distances of nodes and the destination in a priority queue for more performant traversal
         // the values are sorted by the first value in the NodeDistance, which is the weight
-        minHeap heap;
+        priority_queue<NodeDistance, vector<NodeDistance>, greater<NodeDistance>> heap;
 
         // The original node (0) has no distance from itself
         heap.push(make_pair(0, 0));
@@ -136,8 +147,6 @@ public:
     }
 
     int kruskals(){
-        minHeap edges;
-        
-
+        return 0;
     }
 };

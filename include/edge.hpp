@@ -25,7 +25,7 @@ class Edge
 private:
     // The nodes that define the edge
     int v1, v2;
-    // The the wight of an edge, used to calculate the min tree
+    // The the weight of an edge, used to calculate the min tree
     int edge_weight;
 
 public:
@@ -73,6 +73,9 @@ public:
         edge_weight = src.edge_weight;
     };
 
+    //creating > operator for edge for use in priority queue. compares by edge weight
+    bool operator>(const Edge &rhs) const { return (edge_weight > rhs.edge_weight); }
+
     /**
      * The weight of a connection between the nodes that makeup the edge.
      */
@@ -111,6 +114,7 @@ public:
  * @return {bool} - whether the second edge is greater than the first edge or not
  **/
 bool compare_weights(const Edge &first_edge, const Edge &second_edge) { return first_edge.weight() < second_edge.weight(); }
+
 
 /**
  * Insert description of the edge to an output stream

@@ -51,6 +51,8 @@ int main()
     for (auto edge : edge_list)
         graph.add_edge(edge);
 
+
+    graph.testQueue();
     graph.print();
     cout << graph.prims() << endl;
 
