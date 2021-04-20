@@ -46,7 +46,7 @@ public:
         int initialVertex = v;
 
         //finds root node of subset containing given vertex
-        while(mParent[v] > 0){
+        while(mParent[v] >= 0){
             v = mParent[v];
             hasParent = true;
         }

@@ -153,8 +153,8 @@ public:
         //creating disjoint set with number of vertices
         DisjointSet dSet(adj.size());
 
-        //continues cretig unions until the mst is complete
-        while(!dSet.isComplete()){
+        //continues creatig unions until the mst is complete
+        while(!edgeMinHeap.empty()){
 
             //getting the fist edge in min heap
             Edge currEdge = edgeMinHeap.top();
