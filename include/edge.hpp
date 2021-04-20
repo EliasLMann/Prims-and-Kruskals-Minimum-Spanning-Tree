@@ -16,8 +16,8 @@ using std::pair;
 typedef int weight;
 typedef int first_node;
 typedef int second_node;
-typedef pair<first_node, second_node> Nodes;
-typedef pair<weight, second_node> NodeDistance;
+typedef pair< first_node, second_node > Nodes;
+typedef pair< weight, second_node > NodeDistance;
 
 class Edge
 {

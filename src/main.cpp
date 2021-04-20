@@ -69,6 +69,8 @@ int main()
     edge_list2.push_back(Edge(3, 4, 1));
     edge_list2.push_back(Edge(4, 5, 3));
 
+    std::cout << "Hello" << endl;
+
     for (auto edge : edge_list2)
         graph2.add_edge(edge);
 

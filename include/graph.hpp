@@ -27,6 +27,7 @@ private:
      * describe how far adjacent nodes are from the origin node.
      **/
     vector<vector<NodeDistance>> adj;
+    
 
 public:
     /**
@@ -81,6 +82,7 @@ public:
             }
         }
     }
+
 
     /**
      * Implement Prim's algorithm to find the cost of a minimum spanning tree from an undirected graph.
