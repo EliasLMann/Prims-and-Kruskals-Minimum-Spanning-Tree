@@ -11,13 +11,19 @@ using namespace std;
 
 class DisjointSet {
 private:
-    //array of parents, declared in heap. If mParent is negative, it represents the wight of the set
+    //array of parents, declared in heap. If parent is negative, it represents the wight of the set
     //the greater the absolute value of the weight, the more weight the given set has.
     int* mParent;
+    //counting number of sets
+    int mMaxWeight = -1;
+    int mNumV = 0;
 
 public:
     //Constructor passing in number of vertices
     DisjointSet(int numV){
+        //setting numSets to total number of vertices
+        mNumV = numV;
+        mMaxWeight = -1;
         //setting all vertices to subsets with weight of -1
         mParent = new int[numV];
         for (int i = 0; i < numV; i++) {
@@ -78,6 +84,11 @@ public:
 
                 //the mParent of the root of set 2 is set to the root of set 1
                 mParent[v2Root] = v1Root;
+
+                //sets the weight of the largest subset
+                if(mParent[v1Root] < mMaxWeight){
+                    mMaxWeight = mParent[v1Root];
+                }
             }
 
             //if the root of set1 has less weight than the root of set 2
@@ -88,10 +99,18 @@ public:
 
                 //the mParent of the root of set 1 is set to the root of set 2
                 mParent[v1Root] = v2Root;
+
+                //sets the weight of the largest subset
+                if(mParent[v2Root] < mMaxWeight){
+                    mMaxWeight = mParent[v2Root];
+                }
             }
         }
 
         //if the desired union is not a cycle, the union was formed
         return !isCycle;
     }
+
+    //returns whether or not the minimum spanning tree has been created
+    bool isComplete() {return mMaxWeight == -(mNumV);}
 };

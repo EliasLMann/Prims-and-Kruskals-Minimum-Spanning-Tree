@@ -51,10 +51,10 @@ int main()
     for (auto edge : edge_list)
         graph.add_edge(edge);
 
-
-    graph.testQueue();
     graph.print();
-    cout << graph.prims() << endl;
+    cout << "Prim's: " << graph.prims() << endl;
+    cout << "Kruskal's: " << graph.kruskals() << endl;
+    
 
     /// Second Test Case
     Graph graph2(6);
@@ -71,11 +71,10 @@ int main()
     edge_list2.push_back(Edge(3, 4, 1));
     edge_list2.push_back(Edge(4, 5, 3));
 
-    std::cout << "Hello" << endl;
-
     for (auto edge : edge_list2)
         graph2.add_edge(edge);
 
     graph2.print();
-    cout << graph2.prims() << endl;
+    cout << "Prim's: " << graph2.prims() << endl;
+    cout << "Kruskal's: " << graph2.kruskals() << endl;
 }

@@ -147,6 +147,26 @@ public:
     }
 
     int kruskals(){
-        return 0;
+        //set cost to 0
+        int cost = 0;
+
+        //creating disjoint set with number of vertices
+        DisjointSet dSet(adj.size());
+
+        //continues cretig unions until the mst is complete
+        while(!dSet.isComplete()){
+
+            //getting the fist edge in min heap
+            Edge currEdge = edgeMinHeap.top();
+
+            //removing edge from min heap
+            edgeMinHeap.pop();
+
+            //adds the cost of the edge if a union is created
+            if(dSet.Union(currEdge.first_node(), currEdge.second_node())){
+                cost += currEdge.weight();
+            }
+        }
+        return cost;
     }
 };
