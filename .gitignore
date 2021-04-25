@@ -2,3 +2,4 @@ build
 *.out
 dist
 c_cpp_properties.json
+.idea
