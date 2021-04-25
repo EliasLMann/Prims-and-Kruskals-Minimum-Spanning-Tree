@@ -62,7 +62,8 @@ public:
      **/
     void add_edge(Edge &edge) {
          adj[edge.first_node()].push_back(edge.distance());
-         //adds edge to min heap
+         adj[edge.second_node()].push_back(make_pair(edge.weight(), edge.first_node()));
+                  //adds edge to min heap
          edgeMinHeap.push(edge);
          }
 
@@ -97,7 +98,6 @@ public:
         }
     }
 
-
     /**
      * Implement Prim's algorithm to find the cost of a minimum spanning tree from an undirected graph.
      * Continually adds the least expensive edge until all edges are added to the tree.
@@ -116,17 +116,17 @@ public:
         vector<bool> added(adj.size(), false);
 
         // The total cost of the minimum spanning tree
-        int cost = 0;
+        float cost = 0;
+        size_t mst_size = 0;
 
-        while (!heap.empty())
+        while (mst_size < adj.size() &&!heap.empty())
         {
-
             // Find the least-costly edge
             NodeDistance edge;
             edge = heap.top();
             heap.pop();
 
-            int weight = edge.first;
+            float weight = edge.first;
             int destination_node = edge.second;
 
             // If the node is not in the tree: add it and increase the cost of the tree
@@ -134,11 +134,13 @@ public:
             {
                 cost += weight;
                 added[destination_node] = true;
+                mst_size++;
 
                 // Traverse the adjacent nodes and add all nodes missing from the tree
                 for (auto &node_distance : adj[destination_node])
                 {
-                    if (added[node_distance.second] == false)
+                    int adj_node = node_distance.second;
+                    if (added[adj_node] == false)
                         heap.push(node_distance);
                 }
             }

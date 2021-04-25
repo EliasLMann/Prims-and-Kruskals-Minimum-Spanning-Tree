@@ -13,7 +13,7 @@ using std::make_pair;
 using std::ostream;
 using std::pair;
 
-typedef int weight;
+typedef float weight;
 typedef int first_node;
 typedef int second_node;
 typedef pair< first_node, second_node > Nodes;
@@ -79,7 +79,7 @@ public:
     /**
      * The weight of a connection between the nodes that makeup the edge.
      */
-    int weight() const { return edge_weight; };
+    float weight() const { return edge_weight; };
 
     /**
      * The origin node
