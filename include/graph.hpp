@@ -7,9 +7,12 @@
 
 // STL Dependencies
 #include <iostream>
+#include <fstream>
 #include <queue>
 #include <algorithm>
 #include <cstring>
+#include <sstream>  
+
 
 using std::greater;
 using std::priority_queue;
@@ -28,8 +31,8 @@ private:
      * describe how far adjacent nodes are from the origin node.
      **/
     vector<vector<NodeDistance>> adj;
-    priority_queue<Edge, vector<Edge>, greater<Edge>> edgeMinHeap;;
-
+    priority_queue<Edge, vector<Edge>, greater<Edge>> edgeMinHeap;
+    ;
 
 public:
     /**
@@ -42,7 +45,55 @@ public:
      * An undirected weighted graph implemented on-top of an adjacency list.
      * @constructor
      **/
-    Graph(const Graph &src) { adj = src.adj; edgeMinHeap = src.edgeMinHeap; };
+    Graph(string filePath)
+    {
+        std::ifstream input;
+        //opening file as write binary
+        input.open(filePath, ios::out | ios::binary);
+        if (!input)
+        {
+            cout << "Cannot Find Input File" << endl;
+        }
+
+        //initializing adjacency list to size of 1,000,000
+        adj.resize(1000000);
+        while (!input.eof())
+        {
+            string currLine;
+            getline(input, currLine);
+            std::stringstream lineStream(currLine);
+
+            //buffer string
+            string currElement;
+
+            //getting the first vertex
+            getline(lineStream,currElement,' ');
+            int v1 = stoi(currElement);
+
+            //getting the second vertex
+            getline(lineStream,currElement,' ');
+            int v2 = stoi(currElement);
+
+            //getting the weight
+            getline(lineStream,currElement,' ');
+            double w = stod(currElement);
+
+            //adding edge to graph
+            add_edge(Edge(v1,v2,w));
+        }
+        input.close();
+        adj.shrink_to_fit();
+    }
+
+    /**
+     * An undirected weighted graph implemented on-top of an adjacency list.
+     * @constructor
+     **/
+    Graph(const Graph &src)
+    {
+        adj = src.adj;
+        edgeMinHeap = src.edgeMinHeap;
+    };
 
     /**
      * An undirected weighted graph implemented on-top of an adjacency list.
@@ -60,18 +111,21 @@ public:
      * Add an pair of nodes and the wieght that constitutes their edge to the graph
      * @param {Edge &} edge - the edge to add to the graph
      **/
-    void add_edge(Edge &edge) {
-         adj[edge.first_node()].push_back(edge.distance());
-         adj[edge.second_node()].push_back(make_pair(edge.weight(), edge.first_node()));
-                  //adds edge to min heap
-         edgeMinHeap.push(edge);
-         }
+    void add_edge(Edge edge)
+    {
+        adj[edge.first_node()].push_back(edge.distance());
+        adj[edge.second_node()].push_back(make_pair(edge.getWeight(), edge.first_node()));
+        //adds edge to min heap
+        edgeMinHeap.push(edge);
+    }
 
-    void testQueue(){
-        while(!edgeMinHeap.empty()){
+    void testQueue()
+    {
+        while (!edgeMinHeap.empty())
+        {
             Edge currEdge = edgeMinHeap.top();
             edgeMinHeap.pop();
-            std:: cout <<  currEdge.weight() << std::endl;
+            std::cout << currEdge.getWeight() << std::endl;
         }
     }
 
@@ -101,9 +155,9 @@ public:
     /**
      * Implement Prim's algorithm to find the cost of a minimum spanning tree from an undirected graph.
      * Continually adds the least expensive edge until all edges are added to the tree.
-     * @return {int} - the cost of the minimum spanning tree
+     * @return {pair<weight,int>} - first: the cost of the minimum spanning tree second: number of edges in MST
      **/
-    int prims()
+    pair<weight, int> prims()
     {
         // Store the distances of nodes and the destination in a priority queue for more performant traversal
         // the values are sorted by the first value in the NodeDistance, which is the weight
@@ -116,17 +170,20 @@ public:
         vector<bool> added(adj.size(), false);
 
         // The total cost of the minimum spanning tree
-        float cost = 0;
-        size_t mst_size = 0;
+        weight cost = 0;
 
-        while (mst_size < adj.size() &&!heap.empty())
+        //must start at -1 to account for default initial [0,0] edge
+        int mst_size = -1;
+
+        //accounting for early exit when mst is complete
+        while (mst_size != (adj.size() - 1) && !heap.empty())
         {
             // Find the least-costly edge
             NodeDistance edge;
             edge = heap.top();
             heap.pop();
 
-            float weight = edge.first;
+            weight weight = edge.first;
             int destination_node = edge.second;
 
             // If the node is not in the tree: add it and increase the cost of the tree
@@ -145,18 +202,25 @@ public:
                 }
             }
         }
-        return cost;
+
+        return make_pair(cost, mst_size);
     }
 
-    int kruskals(){
+    /**
+     * Implement Kruskal's algorithm to find the cost of a minimum spanning tree from an undirected graph.
+     * @return {pair<weight,int>} - first: the cost of the minimum spanning tree second: number of edges in MST
+     **/
+    pair<weight, int> kruskals()
+    {
         //set cost to 0
-        int cost = 0;
+        weight cost = 0;
 
         //creating disjoint set with number of vertices
         DisjointSet dSet(adj.size());
 
         //continues creatig unions until the mst is complete
-        while(!edgeMinHeap.empty()){
+        while (dSet.edgeCount != (adj.size() - 1))
+        {
 
             //getting the fist edge in min heap
             Edge currEdge = edgeMinHeap.top();
@@ -165,10 +229,11 @@ public:
             edgeMinHeap.pop();
 
             //adds the cost of the edge if a union is created
-            if(dSet.Union(currEdge.first_node(), currEdge.second_node())){
-                cost += currEdge.weight();
+            if (dSet.Union(currEdge.first_node(), currEdge.second_node()))
+            {
+                cost += currEdge.getWeight();
             }
         }
-        return cost;
+        return make_pair(cost, dSet.edgeCount);
     }
 };

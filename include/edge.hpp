@@ -13,7 +13,7 @@ using std::make_pair;
 using std::ostream;
 using std::pair;
 
-typedef float weight;
+typedef double weight;
 typedef int first_node;
 typedef int second_node;
 typedef pair< first_node, second_node > Nodes;
@@ -26,7 +26,7 @@ private:
     // The nodes that define the edge
     int v1, v2;
     // The the weight of an edge, used to calculate the min tree
-    int edge_weight;
+    weight edge_weight;
 
 public:
     /**
@@ -42,7 +42,7 @@ public:
      * @param {int} second_node - the destination node
      * @param {int} weight - the weight of the connection between the nodes
      */
-    Edge(int first_node, int second_node, int weight) : v1(first_node), v2(second_node), edge_weight(weight){};
+    Edge(int first_node, int second_node, weight weight) : v1(first_node), v2(second_node), edge_weight(weight){};
 
     /**
      * Definition for a pair of nodes and their weight on a graph.
@@ -79,7 +79,7 @@ public:
     /**
      * The weight of a connection between the nodes that makeup the edge.
      */
-    float weight() const { return edge_weight; };
+    weight getWeight() const { return edge_weight; };
 
     /**
      * The origin node
@@ -113,7 +113,7 @@ public:
  * @param (const Edge&) second_edge - the second edge to compare
  * @return {bool} - whether the second edge is greater than the first edge or not
  **/
-bool compare_weights(const Edge &first_edge, const Edge &second_edge) { return first_edge.weight() < second_edge.weight(); }
+bool compare_weights(const Edge &first_edge, const Edge &second_edge) { return first_edge.getWeight() < second_edge.getWeight(); }
 
 
 /**
@@ -124,6 +124,6 @@ bool compare_weights(const Edge &first_edge, const Edge &second_edge) { return f
  **/
 ostream &operator<<(ostream &os, const Edge &edge)
 {
-    os << edge.first_node() << " <- " << edge.weight() << " -> " << edge.second_node();
+    os << edge.first_node() << " <- " << edge.getWeight() << " -> " << edge.second_node();
     return os;
 }

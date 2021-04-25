@@ -1,80 +1,38 @@
 #include <iostream>
 #include <vector>
 #include <set>
+#include <chrono>
 
 using std::set;
 using std::vector;
-
+using std::chrono::high_resolution_clock;
 using std::cout;
 using std::endl;
 
 #include "../include/edge.hpp"
 #include "../include/graph.hpp"
 
-int main()
+// ./MinTree /Users/eliasmann/Desktop/Algorithms/s21-pa04-wall_mann/inputData/100-1000.dat
+
+int main(int argc, char* const argv[])
 {
-    /// First Test Case
-    Graph graph(7);
-    vector<Edge> edge_list;
-
-    edge_list.push_back(Edge(0, 1, 1));
-    edge_list.push_back(Edge(0, 2, 2));
-    edge_list.push_back(Edge(0, 3, 1));
-    edge_list.push_back(Edge(0, 4, 1));
-    edge_list.push_back(Edge(0, 5, 2));
-    edge_list.push_back(Edge(0, 6, 1));
-
-    edge_list.push_back(Edge(1, 0, 1));
-    edge_list.push_back(Edge(1, 2, 2));
-    edge_list.push_back(Edge(1, 6, 2));
-
-    edge_list.push_back(Edge(2, 0, 2));
-    edge_list.push_back(Edge(2, 1, 2));
-    edge_list.push_back(Edge(2, 3, 1));
-
-    edge_list.push_back(Edge(3, 0, 1));
-    edge_list.push_back(Edge(3, 2, 1));
-    edge_list.push_back(Edge(3, 4, 2));
-
-    edge_list.push_back(Edge(4, 0, 1));
-    edge_list.push_back(Edge(4, 3, 2));
-    edge_list.push_back(Edge(4, 5, 2));
-
-    edge_list.push_back(Edge(5, 0, 2));
-    edge_list.push_back(Edge(5, 4, 2));
-    edge_list.push_back(Edge(5, 6, 1));
-
-    edge_list.push_back(Edge(6, 0, 1));
-    edge_list.push_back(Edge(6, 2, 2));
-    edge_list.push_back(Edge(6, 5, 1));
-
-    for (auto edge : edge_list)
-        graph.add_edge(edge);
-
+    Graph graph("/Users/eliasmann/Desktop/Algorithms/s21-pa04-wall_mann/inputData/100-1000.dat");
     graph.print();
-    cout << "Prim's: " << graph.prims() << endl;
-    cout << "Kruskal's: " << graph.kruskals() << endl;
-    
 
-    /// Second Test Case
-    Graph graph2(6);
-    vector<Edge> edge_list2;
+    auto start = high_resolution_clock::now();
+    pair<weight,int> primData = graph.prims();
+    auto end = high_resolution_clock::now();
+    chrono::duration<double,std::nano> primTime = (end-start);
 
-    edge_list2.push_back(Edge(0, 1, 4));
-    edge_list2.push_back(Edge(0, 2, 1));
-    edge_list2.push_back(Edge(0, 3, 5));
-    edge_list2.push_back(Edge(1, 3, 2));
-    edge_list2.push_back(Edge(1, 4, 3));
-    edge_list2.push_back(Edge(1, 5, 3));
-    edge_list2.push_back(Edge(2, 3, 2));
-    edge_list2.push_back(Edge(2, 4, 8));
-    edge_list2.push_back(Edge(3, 4, 1));
-    edge_list2.push_back(Edge(4, 5, 3));
+    start = high_resolution_clock::now();
+    pair<weight,int> kruskalData = graph.kruskals();
+    end = high_resolution_clock::now();
+    chrono::duration<double,std::nano> kruskalTime = (end-start);
 
-    for (auto edge : edge_list2)
-        graph2.add_edge(edge);
+    cout << "Prim's: " << endl << "Cost: " << primData.first 
+    << endl <<  " Edges: " << primData.second << endl <<"Time (ns): " <<primTime.count() << endl <<endl;
 
-    graph2.print();
-    cout << "Prim's: " << graph2.prims() << endl;
-    cout << "Kruskal's: " << graph2.kruskals() << endl;
+    cout << "Kruskal's: " << endl << "Cost: " << kruskalData.first 
+    << endl << " Edges: " << kruskalData.second << endl <<"Time (ns): " <<kruskalTime.count()<< endl;
+    return 0;
 }

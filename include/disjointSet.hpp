@@ -15,15 +15,17 @@ private:
     //the greater the absolute value of the weight, the more weight the given set has.
     int* mParent;
     //counting number of sets
-    int mMaxWeight = -1;
+    //int mMaxWeight = -1;
     int mNumV = 0;
 
 public:
+    int edgeCount;
     //Constructor passing in number of vertices
     DisjointSet(int numV){
         //setting numSets to total number of vertices
         mNumV = numV;
-        mMaxWeight = -1;
+        edgeCount = 0;
+        //mMaxWeight = -1;
         //setting all vertices to subsets with weight of -1
         mParent = new int[numV];
         for (int i = 0; i < numV; i++) {
@@ -72,6 +74,9 @@ public:
         // union creates a cycle is not formed 
         if (v1Root != v2Root){
 
+            //increments the number of edges when union is formed
+            edgeCount++;
+
             //if v1 and v2 are in different subsets,
             //the union will formed
             isCycle = false;
@@ -86,9 +91,9 @@ public:
                 mParent[v2Root] = v1Root;
 
                 //sets the weight of the largest subset
-                if(mParent[v1Root] < mMaxWeight){
-                    mMaxWeight = mParent[v1Root];
-                }
+                // if(mParent[v1Root] < mMaxWeight){
+                //     mMaxWeight = mParent[v1Root];
+                // }
             }
 
             //if the root of set1 has less weight than the root of set 2
@@ -101,9 +106,9 @@ public:
                 mParent[v1Root] = v2Root;
 
                 //sets the weight of the largest subset
-                if(mParent[v2Root] < mMaxWeight){
-                    mMaxWeight = mParent[v2Root];
-                }
+                // if(mParent[v2Root] < mMaxWeight){
+                //     mMaxWeight = mParent[v2Root];
+                // }
             }
         }
 
@@ -112,5 +117,5 @@ public:
     }
 
     //returns whether or not the minimum spanning tree has been created
-    bool isComplete() {return mMaxWeight == -(mNumV);}
+    // bool isComplete() {return mMaxWeight == -(mNumV);}
 };
