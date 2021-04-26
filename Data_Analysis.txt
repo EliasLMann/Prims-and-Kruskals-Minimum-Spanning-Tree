@@ -1,0 +1,156 @@
+Size: 100 Density: 10
+
+	Prim's: 
+		Cost: 63.6373
+		Edges: 99
+		Time (ms): 0.428285
+
+	Kruskal's: 
+		Cost: 63.6373
+		Edges: 99
+		Time (ms): 0.15106
+
+Size: 100 Density: 25
+
+	Prim's: 
+		Cost: 22.9084
+		Edges: 99
+		Time (ms): 1.00823
+
+	Kruskal's: 
+		Cost: 22.9084
+		Edges: 99
+		Time (ms): 0.35581
+
+Size: 100 Density: 49.5
+
+	Prim's: 
+		Cost: 12.6488
+		Edges: 99
+		Time (ms): 1.24113
+
+	Kruskal's: 
+		Cost: 12.6488
+		Edges: 99
+		Time (ms): 0.195372
+
+Size: 1000 Density: 10
+
+	Prim's: 
+		Cost: 595.281
+		Edges: 999
+		Time (ms): 6.26155
+
+	Kruskal's: 
+		Cost: 595.281
+		Edges: 999
+		Time (ms): 3.68689
+
+Size: 1000 Density: 25
+
+	Prim's: 
+		Cost: 240.635
+		Edges: 999
+		Time (ms): 10.3357
+
+	Kruskal's: 
+		Cost: 240.635
+		Edges: 999
+		Time (ms): 3.49307
+
+Size: 1000 Density: 50
+
+	Prim's: 
+		Cost: 117.83
+		Edges: 999
+		Time (ms): 14.957
+
+	Kruskal's: 
+		Cost: 117.83
+		Edges: 999
+		Time (ms): 2.71904
+
+Size: 10000 Density: 10
+
+	Prim's: 
+		Cost: 6072.61
+		Edges: 9999
+		Time (ms): 80.451
+
+	Kruskal's: 
+		Cost: 6072.61
+		Edges: 9999
+		Time (ms): 53.98
+
+Size: 10000 Density: 25
+
+	Prim's: 
+		Cost: 2422.42
+		Edges: 9999
+		Time (ms): 113.168
+
+	Kruskal's: 
+		Cost: 2422.42
+		Edges: 9999
+		Time (ms): 52.2116
+
+Size: 10000 Density: 50
+
+	Prim's: 
+		Cost: 1220.6
+		Edges: 9999
+		Time (ms): 179.41
+
+	Kruskal's: 
+		Cost: 1220.6
+		Edges: 9999
+		Time (ms): 84.7223
+
+Size: 100000 Density: 10
+
+	Prim's: 
+		Cost: 60044.5
+		Edges: 99999
+		Time (ms): 1000.84
+
+	Kruskal's: 
+		Cost: 60044.5
+		Edges: 99999
+		Time (ms): 776.245
+
+Size: 100000 Density: 25
+
+	Prim's: 
+		Cost: 24029.5
+		Edges: 99999
+		Time (ms): 1511.4
+
+	Kruskal's: 
+		Cost: 24029.5
+		Edges: 99999
+		Time (ms): 912.666
+
+Size: 100000 Density: 50
+
+	Prim's: 
+		Cost: 12078.5
+		Edges: 99999
+		Time (ms): 2347.5
+
+	Kruskal's: 
+		Cost: 12078.5
+		Edges: 99999
+		Time (ms): 1198.63
+
+Size: 1000 Density: 499.5
+
+	Prim's: 
+		Cost: 11.5249
+		Edges: 999
+		Time (ms): 109.337
+
+	Kruskal's: 
+		Cost: 11.5249
+		Edges: 999
+		Time (ms): 3.79877
+

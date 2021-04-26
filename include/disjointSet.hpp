@@ -1,4 +1,4 @@
-/* Elias Mann - SMU CS 3353 2021 Spring PA04
+/* Elias Mann, Nick Wall - SMU CS 3353 2021 Spring PA04
  * 
  * A disjoint set data structure used to implement kruskal's algorithm*/
 
@@ -11,34 +11,42 @@ using namespace std;
 
 class DisjointSet {
 private:
-    //array of parents, declared in heap. If parent is negative, it represents the wight of the set
-    //the greater the absolute value of the weight, the more weight the given set has.
+    /**
+     * Array of parents. If parent is negative, it represents the weight of the set.
+     * The greater the absolute value of the weight, the more weight the given set has.
+     */
     int* mParent;
-    //counting number of sets
-    //int mMaxWeight = -1;
-    int mNumV = 0;
 
 public:
+    /**
+     * The number of edges in the MST
+     */
     int edgeCount;
-    //Constructor passing in number of vertices
+
+    /**
+     * Constructor the creates the disjoint set initializing all parents to -1
+     * Initializes the MST edge count to 0
+     * @param numV
+     */
     DisjointSet(int numV){
-        //setting numSets to total number of vertices
-        mNumV = numV;
         edgeCount = 0;
-        //mMaxWeight = -1;
-        //setting all vertices to subsets with weight of -1
         mParent = new int[numV];
         for (int i = 0; i < numV; i++) {
             mParent[i] = -1;
         }
     }
 
-    //destructor
+    /**
+     * Destructor
+     */
     ~DisjointSet(){ delete [] mParent;}
-  
-    //collapsing find method:
-    //when the root of a given subset containing the vertex is found, 
-    //the parent of the vertex is set to the root node for constant lookup time
+
+    /**
+     * Collapsing find method: When the root of a given subset containing the vertex is found,
+     * the parent of the vertex is set to the root node for constant find time on next find.
+     * @param v
+     * @return {int}
+     */
     int find(int v){
 
         //flag for if a given index has a parent index
@@ -60,8 +68,13 @@ public:
         }
         return v;
     }
-  
-    //weighted union function returns whether or not union was created
+
+    /**
+     * Weighted union function returns whether or not union was created
+     * @param v1
+     * @param v2
+     * @return {bool}
+     */
     bool Union(int v1, int v2){
         // Find the root nodes of the sets containing v1 and v2
         int v1Root = find(v1);
@@ -89,11 +102,6 @@ public:
 
                 //the mParent of the root of set 2 is set to the root of set 1
                 mParent[v2Root] = v1Root;
-
-                //sets the weight of the largest subset
-                // if(mParent[v1Root] < mMaxWeight){
-                //     mMaxWeight = mParent[v1Root];
-                // }
             }
 
             //if the root of set1 has less weight than the root of set 2
@@ -104,18 +112,9 @@ public:
 
                 //the mParent of the root of set 1 is set to the root of set 2
                 mParent[v1Root] = v2Root;
-
-                //sets the weight of the largest subset
-                // if(mParent[v2Root] < mMaxWeight){
-                //     mMaxWeight = mParent[v2Root];
-                // }
             }
         }
-
         //if the desired union is not a cycle, the union was formed
         return !isCycle;
     }
-
-    //returns whether or not the minimum spanning tree has been created
-    // bool isComplete() {return mMaxWeight == -(mNumV);}
 };

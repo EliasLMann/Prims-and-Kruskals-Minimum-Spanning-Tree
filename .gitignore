@@ -3,3 +3,5 @@ build
 dist
 c_cpp_properties.json
 .idea
+inputData
+cmake-build-debug

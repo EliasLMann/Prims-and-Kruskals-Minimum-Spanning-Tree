@@ -1,4 +1,4 @@
-/* Nick Wall - SMU CS 3353 2021 Spring PA04
+/* Nick Wall, Elias Mann - SMU CS 3353 2021 Spring PA04
  * 
  * Graph representation of a weighted undirected graph using an adjacency list. Implements prim's and kruskal's algorithms
  * to find the minimum spanning tree. */
@@ -31,8 +31,11 @@ private:
      * describe how far adjacent nodes are from the origin node.
      **/
     vector<vector<NodeDistance>> adj;
+
+    /**
+     * A min Heap of edges in the graph
+     */
     priority_queue<Edge, vector<Edge>, greater<Edge>> edgeMinHeap;
-    ;
 
 public:
     /**
@@ -55,34 +58,52 @@ public:
             cout << "Cannot Find Input File" << endl;
         }
 
-        //initializing adjacency list to size of 1,000,000
-        adj.resize(1000000);
+        //initializing adjacency list to size of 5,000,000
+        int allocSize = 5000000;
+        adj.resize(allocSize);
+        int largest = 0;
         while (!input.eof())
         {
             string currLine;
             getline(input, currLine);
-            std::stringstream lineStream(currLine);
+            if(currLine.length() > 0 ) {
+                std::stringstream lineStream(currLine);
 
-            //buffer string
-            string currElement;
+                //buffer string
+                string currElement;
 
-            //getting the first vertex
-            getline(lineStream,currElement,' ');
-            int v1 = stoi(currElement);
+                //getting the first vertex
+                getline(lineStream, currElement, ' ');
+                int v1 = stoi(currElement);
 
-            //getting the second vertex
-            getline(lineStream,currElement,' ');
-            int v2 = stoi(currElement);
+                if (v1 > largest) {
+                    largest = v1;
+                }
 
-            //getting the weight
-            getline(lineStream,currElement,' ');
-            double w = stod(currElement);
+                //getting the second vertex
+                getline(lineStream, currElement, ' ');
+                int v2 = stoi(currElement);
 
-            //adding edge to graph
-            add_edge(Edge(v1,v2,w));
+                if (v2 > largest) {
+                    largest = v2;
+                }
+
+                //getting the weight
+                getline(lineStream, currElement, ' ');
+                double w = stod(currElement);
+
+                //if there are more than 5,000,000 vertices, double the size
+                if (largest > allocSize) {
+                    allocSize = (largest * 2);
+                    adj.resize(allocSize);
+                }
+
+                //adding edge to graph
+                add_edge(Edge(v1, v2, w));
+            }
         }
         input.close();
-        adj.shrink_to_fit();
+        adj.resize(largest+1);
     }
 
     /**
@@ -108,26 +129,28 @@ public:
     void operator=(const Graph &src) { adj = src.adj; };
 
     /**
-     * Add an pair of nodes and the wieght that constitutes their edge to the graph
+     * Add an pair of nodes and the weight that constitutes their edge to the graph
+     * Add the edge to the minimum heap of edges
      * @param {Edge &} edge - the edge to add to the graph
      **/
     void add_edge(Edge edge)
     {
         adj[edge.first_node()].push_back(edge.distance());
         adj[edge.second_node()].push_back(make_pair(edge.getWeight(), edge.first_node()));
-        //adds edge to min heap
         edgeMinHeap.push(edge);
     }
 
-    void testQueue()
-    {
-        while (!edgeMinHeap.empty())
-        {
-            Edge currEdge = edgeMinHeap.top();
-            edgeMinHeap.pop();
-            std::cout << currEdge.getWeight() << std::endl;
-        }
-    }
+    /**
+     * returns the number of vertices in the graph
+     * @return {int}
+     **/
+    int getSize(){return adj.size();}
+
+    /**
+     * returns the ratio of edges per vertex in the graph
+     * @return {double}
+     **/
+    double getDensity(){return (double(edgeMinHeap.size())/double(adj.size()));}
 
     /**
      * Display the graph by displaying all origin nodes and their adjacent nodes with
@@ -202,7 +225,6 @@ public:
                 }
             }
         }
-
         return make_pair(cost, mst_size);
     }
 
@@ -218,7 +240,9 @@ public:
         //creating disjoint set with number of vertices
         DisjointSet dSet(adj.size());
 
-        //continues creatig unions until the mst is complete
+        //continues creating unions until the mst is complete
+        //unoptimized: !edgeMinHeap.empty()
+        //optimized: dSet.edgeCount != (adj.size() - 1)
         while (dSet.edgeCount != (adj.size() - 1))
         {
 

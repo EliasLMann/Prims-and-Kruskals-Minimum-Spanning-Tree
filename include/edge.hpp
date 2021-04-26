@@ -1,4 +1,4 @@
-/* Nick Wall - SMU CS 3353 2021 Spring PA04
+/* Nick Wall, Elias Mann - SMU CS 3353 2021 Spring PA04
  * 
  * Edge is a class that describes a connection between two nodes on a graph, edges are graph class agnostic
  * and only serve to encapsulate a weight and a node pairing. */
@@ -23,9 +23,14 @@ class Edge
 {
 
 private:
-    // The nodes that define the edge
+    /**
+     * The nodes that define the edge
+     */
     int v1, v2;
-    // The the weight of an edge, used to calculate the min tree
+
+    /**
+     * The the weight of an edge, used to calculate the min tree
+     */
     weight edge_weight;
 
 public:
@@ -73,7 +78,9 @@ public:
         edge_weight = src.edge_weight;
     };
 
-    //creating > operator for edge for use in priority queue. compares by edge weight
+    /**
+     * > operator for edge for use in priority queue. compares by edge weight
+     */
     bool operator>(const Edge &rhs) const { return (edge_weight > rhs.edge_weight); }
 
     /**
@@ -94,27 +101,12 @@ public:
     int second_node() const { return v2; };
 
     /**
-     * The nodes that constitute the an edge on the graph
-     * @return {pair<int, int>} - the <origin, destination> node pair
-     **/
-    Nodes nodes() const { return make_pair(v1, v2); };
-
-    /**
      * The distance and secondary node that describes the cost from origin
      * to destination
      * @return {pair<int, int>} - the <weight, destination> pair
      **/
     NodeDistance distance() const { return make_pair(edge_weight, v2); };
 };
-
-/**
- * Compare the wights of two edges regardless of the nodes that define the edge
- * @param (const Edge&) first_edge - the first edge to compare
- * @param (const Edge&) second_edge - the second edge to compare
- * @return {bool} - whether the second edge is greater than the first edge or not
- **/
-bool compare_weights(const Edge &first_edge, const Edge &second_edge) { return first_edge.getWeight() < second_edge.getWeight(); }
-
 
 /**
  * Insert description of the edge to an output stream
